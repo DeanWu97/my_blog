@@ -1,5 +1,7 @@
 package com.dean.my_blog.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.lang.NonNull;
@@ -8,12 +10,14 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Entity
+@Data
+@MappedSuperclass
 @AllArgsConstructor
 @NoArgsConstructor
 public class BaseEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @TableId(type = IdType.AUTO)
     private Long id;
     @NonNull
     private LocalDateTime createdAt;
