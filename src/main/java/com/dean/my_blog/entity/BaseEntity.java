@@ -8,12 +8,12 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Entity
+@MappedSuperclass
 @AllArgsConstructor
 @NoArgsConstructor
 public class BaseEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NonNull
     private LocalDateTime createdAt;
