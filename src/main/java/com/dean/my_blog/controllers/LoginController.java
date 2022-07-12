@@ -1,6 +1,7 @@
 package com.dean.my_blog.controllers;
 
 import com.dean.my_blog.controllers.requests.UserRequest;
+import com.dean.my_blog.controllers.responces.BaseResponce;
 import com.dean.my_blog.controllers.responces.UserResponce;
 import com.dean.my_blog.entity.User;
 import com.dean.my_blog.service.LoginService;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 @RestController
@@ -30,14 +33,14 @@ public class LoginController {
         return HttpServletResponse.SC_OK;
     }
     @PostMapping("/regist")
-    public ResponseEntity regist(@RequestBody UserRequest userRequest) {
+    public ResponseEntity<BaseResponce<UserResponce>> regist(@RequestBody UserRequest userRequest) {
         Set<ConstraintViolation<UserRequest>> validate = validator.validate(userRequest);
         if (!validate.isEmpty()) {
-            return ResponseEntity.badRequest().body(validate.iterator().next().getMessage());
+//            return ResponseEntity.badRequest().body(validate.iterator().next().getMessage());
+            return ResponseEntity.badRequest().build();
         }
         UserResponce userResponce = loginService.registUser(userRequest);
-
-        return ResponseEntity.ok(userResponce);
+        return ResponseEntity.ok(BaseResponce.ok(userResponce));
     }
 
 }

@@ -24,6 +24,7 @@ public class UserConverterDecorater implements UserConverter{
 
     @Override
     public UserResponce userToUserResponce(User user) {
-        return null;
+        UserResponce userResponce = delegate.userToUserResponce(user);
+        return userResponce;
     }
 }
