@@ -7,12 +7,12 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class BaseResponce<T> {
+public class BaseResponse<T> {
     private String code;
     private T data;
     private Object paging;
-    public static<T> BaseResponce<T> ok(T t) {
-        return new BaseResponce<T>("000000",t, "this is paging");
+    public static<T> BaseResponse<T> ok(T t) {
+        return new BaseResponse<T>("000000",t, "this is paging");
 //        return new BaseResponce<T>("000000", "this is paging");
 //        return new BaseResponce<T>("000000");
     }
