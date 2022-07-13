@@ -15,6 +15,7 @@ import javax.xml.transform.Source;
 @Mapper(unmappedSourcePolicy = ReportingPolicy.IGNORE,componentModel = "spring")
 @DecoratedWith(UserConverterDecorater.class)
 public interface UserConverter {
+    @Mapping(source = "code", target = "inviteCode")
     User userRequestToUser(UserRequest userRequest);
     UserResponce userToUserResponce(User user);
 }

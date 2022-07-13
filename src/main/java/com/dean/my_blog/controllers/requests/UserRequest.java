@@ -20,5 +20,7 @@ public class UserRequest {
     private String encyptPassword;
     private String cellphone;
     private String email;
+    @NotNull(message = "invite code must be not null")
+    private String code;
 
 }
