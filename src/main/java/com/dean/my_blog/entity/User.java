@@ -20,5 +20,6 @@ public class User extends BaseEntity{
     private String cellphone;
     private String email;
     private String inviteCode;
+    private String authenticationToken;
 }
 
