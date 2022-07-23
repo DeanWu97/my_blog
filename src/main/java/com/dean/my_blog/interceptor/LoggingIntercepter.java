@@ -1,11 +1,8 @@
 package com.dean.my_blog.interceptor;
 
-import com.dean.my_blog.entity.User;
-import com.dean.my_blog.repo.UserRepo;
 import com.google.common.collect.Maps;
-import org.apache.commons.codec.digest.DigestUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -13,21 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
-public class WebApiAuthInterceptor implements HandlerInterceptor {
-    @Autowired
-    private UserRepo userRepo;
+@Slf4j
+public class LoggingIntercepter implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        Map<String, String> parameterMap = convertArrayToString(request.getParameterMap());
-        String sign = parameterMap.get("sign");
-        if (System.currentTimeMillis() > Long.valueOf(parameterMap.get("timestamp"))+5*60*1_000) {
-            throw new Exception("TimeStamp Is Expaired");
-        }
-        Long user_id = Long.valueOf(parameterMap.get("user_id"));
-        User user = userRepo.findById(user_id).orElseThrow(() -> new Exception("User Not Found"));
-        if (!sign.equals(DigestUtils.sha256Hex(parameterMap.get("timestamp")+user.getAuthenticationToken()))) {
-            throw new Exception("Sign Not Right");
-        }
+        Map<String, String> params = convertArrayToString(request.getParameterMap());
+        log.info("[{}]enter api logger: method={}, uri={},params={}",System.currentTimeMillis(),request.getMethod(),request.getRequestURI(),params);
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 
@@ -38,6 +26,7 @@ public class WebApiAuthInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        log.info("[{}]exit api logger: method={}, uri={},{},{}",System.currentTimeMillis(),request.getMethod(),request.getRequestURI(),response.getStatus(),response.getOutputStream());
         HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
     }
 
