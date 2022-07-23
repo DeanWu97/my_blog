@@ -25,6 +25,6 @@ public class ControllerHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public ResponseEntity internalServerError(Exception ex, HttpServletRequest request, HttpServletResponse response) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(BaseResponse.ok(ex));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(BaseResponse.error(ex.getMessage()));
     }
 }

@@ -39,7 +39,7 @@ public class LoginController {
         if (!validate.isEmpty()) {
 //            return ResponseEntity.badRequest().body(validate.iterator().next().getMessage());
 //            return ResponseEntity.badRequest().build();
-            throw new Exception(new Throwable("ParamsValidateException"));
+            throw new Exception("ParamsValidateException");
         }
         UserResponce userResponce = loginService.registUser(userRequest, invitationCode);
         return ResponseEntity.ok(BaseResponse.ok(userResponce));
