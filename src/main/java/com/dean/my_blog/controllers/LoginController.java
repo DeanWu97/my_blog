@@ -24,11 +24,17 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
     private Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+
     @PostMapping
-    public Integer login() {
+    public ResponseEntity<BaseResponse<UserResponce>> login(@RequestBody UserRequest userRequest) throws Exception {
         log.info("post login");
-        return HttpServletResponse.SC_OK;
+            UserResponce userResponce = loginService.loginUser(userRequest);
+            if (Objects.isNull(userRequest.getEncyptPassword())) {
+                throw new Exception("Login Faild");
+            }
+            return ResponseEntity.ok(BaseResponse.ok(userResponce));
     }
+
     @PostMapping("/regist")
     public ResponseEntity<BaseResponse<UserResponce>> regist(@RequestBody UserRequest userRequest) throws Exception {
         InvitationCodes invitationCode = loginService.vertifyInviteCode(userRequest.getCode());
@@ -37,8 +43,6 @@ public class LoginController {
         }
         Set<ConstraintViolation<UserRequest>> validate = validator.validate(userRequest);
         if (!validate.isEmpty()) {
-//            return ResponseEntity.badRequest().body(validate.iterator().next().getMessage());
-//            return ResponseEntity.badRequest().build();
             throw new Exception("ParamsValidateException");
         }
         UserResponce userResponce = loginService.registUser(userRequest, invitationCode);

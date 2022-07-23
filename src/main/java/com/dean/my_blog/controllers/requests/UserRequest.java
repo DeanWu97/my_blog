@@ -14,13 +14,12 @@ import javax.validation.constraints.NotNull;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserRequest {
-    @NotNull(message = "NickName must be not null")
     private String nickname;
     @NotNull(message = "Password must be not null")
     private String encyptPassword;
     private String cellphone;
+    @NotNull(message = "Email must be not null")
     private String email;
-    @NotNull(message = "invite code must be not null")
     private String code;
 
 }

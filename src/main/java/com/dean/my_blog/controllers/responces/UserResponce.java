@@ -13,4 +13,5 @@ public class UserResponce {
     private String nickname;
     private String cellphone;
     private String email;
+    private String authenticationToken;
 }

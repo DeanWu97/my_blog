@@ -3,6 +3,7 @@ package com.dean.my_blog.mapper;
 import com.dean.my_blog.controllers.requests.UserRequest;
 import com.dean.my_blog.controllers.responces.UserResponce;
 import com.dean.my_blog.entity.User;
+import com.dean.my_blog.util.EncryptUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +19,7 @@ public class UserConverterDecorater implements UserConverter{
     @Override
     public User userRequestToUser(UserRequest userRequest) {
         User user = delegate.userRequestToUser(userRequest);
-        user.setEncyptPassword(bCryptPasswordEncoder.encode(userRequest.getEncyptPassword()));
+        user.setEncyptPassword(EncryptUtil.encrypt(userRequest.getEncyptPassword()));
         return user;
     }
 
