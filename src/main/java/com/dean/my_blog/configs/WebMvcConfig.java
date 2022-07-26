@@ -21,7 +21,10 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loggingIntercepter()).addPathPatterns("/**");
-        registry.addInterceptor(webApiAuthInterceptor()).addPathPatterns("/**").excludePathPatterns("/login/**");
+        registry.addInterceptor(webApiAuthInterceptor())
+                .addPathPatterns("/**")
+                .excludePathPatterns("/login/regist")
+                .excludePathPatterns("/login");
         super.addInterceptors(registry);
     }
 }

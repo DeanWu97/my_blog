@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserRequest {
+    private Long id;
     private String nickname;
     @NotNull(message = "Password must be not null")
     private String encyptPassword;

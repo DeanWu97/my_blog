@@ -13,6 +13,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.objenesis.ObjenesisHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,5 +57,14 @@ public class LoginService {
         if (Objects.isNull(code)) return null;
         InvitationCodes byCodeAndInviteTimesIsNot = invitationCodeRepo.findByCodeAndInviteTimesIsNot(code, 0L);
         return byCodeAndInviteTimesIsNot;
+    }
+
+    public boolean logoutUser(UserRequest userRequest) throws Exception {
+        User user = userRepo.findById(userRequest.getId()).get();
+        if (Objects.isNull(user)) return false;
+        if (Objects.isNull(user.getAuthenticationToken())) return true;
+        user.setAuthenticationToken(null);
+        userRepo.save(user);
+        return true;
     }
 }

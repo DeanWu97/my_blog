@@ -35,6 +35,14 @@ public class LoginController {
             return ResponseEntity.ok(BaseResponse.ok(userResponce));
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<BaseResponse<String>> logout(@RequestBody UserRequest userRequest) throws Exception {
+        if (loginService.logoutUser(userRequest)) {
+            return ResponseEntity.ok(BaseResponse.ok("SUCCESS"));
+        }
+        return ResponseEntity.ok(BaseResponse.ok("FAIL"));
+    }
+
     @PostMapping("/regist")
     public ResponseEntity<BaseResponse<UserResponce>> regist(@RequestBody UserRequest userRequest) throws Exception {
         InvitationCodes invitationCode = loginService.vertifyInviteCode(userRequest.getCode());
